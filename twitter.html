@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Twitter JSONP Request</title>
+    <style>
+      body {
+        font-family: Arial, sans-serif;
+        background-color: #f4f4f9;
+        color: #333;
+        margin: 0;
+        padding: 0;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        height: 100vh;
+      }
+
+      h1 {
+        color: #1da1f2;
+      }
+
+      button {
+        background-color: #1da1f2;
+        color: white;
+        border: none;
+        padding: 10px 20px;
+        font-size: 16px;
+        border-radius: 5px;
+        cursor: pointer;
+        transition: background-color 0.3s ease;
+      }
+
+      button:hover {
+        background-color: #0d8ddb;
+      }
+
+      #twitterData {
+        margin-top: 20px;
+        padding: 20px;
+        background-color: white;
+        border-radius: 5px;
+        box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        width: 80%;
+        max-width: 600px;
+        overflow-wrap: break-word;
+      }
+    </style>
+  </head>
+  <body>
+    <h1>Twitter JSONP Example</h1>
+    <button id="data">Fetch Tweets</button>
+    <div id="twitterData"></div>
+
+    <script>
+      const tweetId = '1680796586316804098';
+      const url = `http://localhost:3000/tweets/${tweetId}`;
+
+      document.getElementById('data').addEventListener('click', () => {
+        fetch(url)
+          .then(response => {
+            if (!response.ok) {
+              throw new Error(`HTTP error! Status: ${response.status}`);
+            }
+            console.log(response);
+            return response.json();
+          })
+          .then(data => {
+            document.getElementById('twitterData').innerText = JSON.stringify(data, null, 2);
+          })
+          .catch(error => console.error('Error fetching tweet:', error));
+      });
+    </script>
+  </body>
+</html>
